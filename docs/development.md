@@ -2,6 +2,8 @@
 
 [README](../README.zh-CN.md) 讲的是怎么装、怎么用，这里是从源码跑、目录结构、打包发布，和每一版实际验证到了哪一步。和原版的对应关系、模型怎么选、提示词怎么调的，在[实现笔记](implementation-notes.md)里。
 
+Windows 11 支持尚在规格阶段，见[迁移规格](../features/windows11-support/spec.md)和[WSL2 / Windows 环境准备清单](../features/windows11-support/environment-todo.md)。下文现有运行与发布命令适用于 macOS。
+
 ## 从源码跑
 
 从源码跑需要 Node 22.13 以上（用 23 的话要 23.4 以上）和 Xcode 命令行工具（`xcode-select --install`）：
@@ -146,4 +148,3 @@ npm run install-app     # 打包并装进“应用程序”，然后打开
   - 上线：`npm run deploy` 在服务器上构建 2 分 37 秒（多半是第一次拉基础镜像），打出来的文件名指纹和本机构建的一样；容器起来后占 3.5 MB 内存，同机另外两个站的容器、端口照旧、都回 200。宿主机站点文件换成 `host-nginx.conf`（原文件备份在服务器上），`nginx -t` 通过后 reload。从外网看：https 200，带 HSTS 和容器加的安全头，http 301 到 https，`/health` 200，截图带官网来源 200、陌生来源 403。
   - **没验证的**：Safari 和 Firefox（只在 Chromium 里看过；不支持滚动驱动动画的浏览器里各段直接显示、不浮上来，这是照代码说的，没实测）；线上的手机宽度（无头 Chrome 的窗口最窄 500 像素，390 宽只在第一版时用浏览器的设备模拟看过）。
 - 只有自动测试、没在真机上试的：启动时断网、从 0.1 版搬数据、重新检查权限时不再反复弹系统授权框。
-
